@@ -32,7 +32,7 @@ def _get_default_cas():
     return None
 
 
-def _collect_source(source, ctx, bundle_name):
+def _collect_source(source, ctx, bundle_name):  # pylint: disable=too-many-return-statements
     """Resolve a single Bundle source entry. Returns (pem_str, warning)."""
     if source.get("useDefaultCAs"):
         cas = _get_default_cas()
@@ -86,6 +86,7 @@ class TrustManagerConverter:
     priority = 20  # after cert-manager (needs secrets), before keycloak (produces configmaps)
 
     def convert(self, _kind, manifests, ctx):
+        """Process Bundle manifests into synthetic ConfigMaps."""
         for m in manifests:
             name = m.get("metadata", {}).get("name", "?")
             spec = m.get("spec", {})

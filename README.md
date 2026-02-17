@@ -29,7 +29,7 @@ The assembled bundle is injected into `ctx.configmaps` under the Bundle's name, 
 
 ## Depends on
 
-- **h2c-operator-certmanager** -- needs its generated Secrets as input for Secret-type sources. When using h2c-manager, certmanager is auto-resolved as a dependency.
+- **h2c-operator-cert-manager** -- needs its generated Secrets as input for Secret-type sources. When using h2c-manager, cert-manager is auto-resolved as a dependency.
 
 ## Dependencies
 
@@ -37,7 +37,7 @@ The assembled bundle is injected into `ctx.configmaps` under the Bundle's name, 
 
 ## Usage
 
-Via h2c-manager (recommended -- auto-resolves certmanager dependency):
+Via h2c-manager (recommended -- auto-resolves cert-manager dependency):
 
 ```bash
 python3 h2c-manager.py trust-manager
@@ -47,7 +47,7 @@ Manual (both operators must be in the same directory — `--extensions-dir` scan
 
 ```bash
 mkdir -p operators
-cp h2c-operator-certmanager/certmanager.py operators/
+cp h2c-operator-cert-manager/cert_manager.py operators/
 cp h2c-operator-trust-manager/trust_manager.py operators/
 
 python3 helmfile2compose.py \
