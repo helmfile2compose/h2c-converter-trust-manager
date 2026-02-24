@@ -25,7 +25,7 @@ The assembled bundle is injected into `ctx.configmaps` under the Bundle's name, 
 
 ## Priority
 
-`20` -- runs after cert-manager (priority 10, generates the Secrets this converter reads), before keycloak (priority 50, mounts the ConfigMaps this converter produces).
+`200` -- runs after cert-manager (priority 100, generates the Secrets this converter reads), before keycloak (priority 500, mounts the ConfigMaps this converter produces).
 
 ## Depends on
 
