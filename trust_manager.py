@@ -1,4 +1,4 @@
-"""h2c operator: trust-manager — Bundle.
+"""dekube converter: trust-manager — Bundle.
 
 Assembles CA trust bundles from cert-manager Secrets, ConfigMaps, inline PEM,
 and (optionally) system default CAs. Injects the result as a synthetic
@@ -47,9 +47,9 @@ def _collect_source(source, ctx, bundle_name):  # pylint: disable=too-many-retur
         key = secret_src.get("key", "")
         sec = ctx.secrets.get(name, {})
         # K8s Secret format: stringData (plain) or data (base64)
-        val = sec.get("stringData", {}).get(key)
+        val = (sec.get("stringData") or {}).get(key)
         if val is None:
-            raw = sec.get("data", {}).get(key)
+            raw = (sec.get("data") or {}).get(key)
             if raw is not None:
                 try:
                     import base64 as b64  # pylint: disable=import-outside-toplevel
@@ -66,7 +66,7 @@ def _collect_source(source, ctx, bundle_name):  # pylint: disable=too-many-retur
         name = cm_src.get("name", "")
         key = cm_src.get("key", "")
         cm = ctx.configmaps.get(name, {})
-        val = cm.get("data", {}).get(key) if "data" in cm else cm.get(key)
+        val = (cm.get("data") or {}).get(key) if "data" in cm else cm.get(key)
         if val is not None:
             return val, None
         return None, (f"Bundle '{bundle_name}': configMap '{name}' "
